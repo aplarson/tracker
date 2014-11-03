@@ -32,3 +32,10 @@ end
 def sign_up_new_guy
   sign_up('new_guy')
 end
+
+def sign_in_new_guy
+  visit '/session/new'
+  fill_in "Username", with: 'new_guy'
+  fill_in "Password", with: 'password'
+  click_button "Sign In"
+end

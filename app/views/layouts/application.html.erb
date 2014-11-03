@@ -12,7 +12,11 @@
   <%= flash[:errors].join("<br>").html_safe %>
 <% end %>
 
-<%= current_user.username if logged_in? %>
+
+<% if logged_in? %>
+  <%= current_user.username %>
+  <%= button_to "Sign Out", session_url, method: :delete %>
+<% end %>
 
 <%= yield %>
 

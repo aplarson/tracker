@@ -1,0 +1,15 @@
+<h1>New Goal</h1>
+<form action="<%= goals_url %>" method="POST">
+  <%= auth_token %>
+  <label>Goal
+    <input type="text" 
+           name="goal[title]" 
+           value="<%= @goal.title %>">
+  </label>
+  
+  <label>Description
+    <textarea name="goal[description]"><%= @goal.description %></textarea>
+  </label>
+  
+  <input type="submit" value="Set Goal!">
+</form>

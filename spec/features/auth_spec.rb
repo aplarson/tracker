@@ -51,18 +51,33 @@ feature "logging in" do
   
   it "logs in a user with correct information and not with wrong information" do
     sign_up_new_guy
+    sign_in_new_guy
     
+    expect(page).to have_content 'new_guy'
   end
 
 
-  it "shows username on the homepage after login"
+  it "shows username on the homepage after login" do
+    sign_up_new_guy
+    sign_in_new_guy
+    
+    expect(page).to have_content 'new_guy'
+  end
 
 end
 
 feature "logging out" do 
 
-  it "begins with logged out state"
+  it "begins with logged out state" do
+    visit 'session/new'
+    
+    expect(page).not_to have_button 'Sign Out'
+  end
 
-  it "doesn't show username on the homepage after logout"
+  it "doesn't show username on the homepage after logout" do
+    sign_up_new_guy
+    click_button "Sign Out"
+    expect(page).not_to have_content 'new_guy'
+  end
 
 end

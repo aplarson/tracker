@@ -12,7 +12,8 @@
 
 FactoryGirl.define do
   factory :user do
-    
+    username 'new_guy'
+    password 'password'
   end
 
 end
