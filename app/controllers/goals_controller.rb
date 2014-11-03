@@ -1,5 +1,8 @@
 class GoalsController < ApplicationController
+  before_action :require_sign_in
+  
   def new
+    @user = User.find(params[:user_id])
     @goal = Goal.new
   end
   

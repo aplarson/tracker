@@ -11,9 +11,18 @@
 #
 
 FactoryGirl.define do
-  factory :user do
+  factory :user, class: 'User' do
     username 'new_guy'
     password 'password'
   end
+  
+  factory :another_user, class: 'User' do
+    username 'newer_guy'
+    password 'password'
+  end
 
+  factory :secretive_user, class: 'User' do
+    username 'secret_girl'
+    password 'password'
+  end
 end

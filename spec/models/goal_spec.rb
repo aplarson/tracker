@@ -8,10 +8,13 @@
 #  user_id     :integer          not null
 #  created_at  :datetime
 #  updated_at  :datetime
+#  privacy     :boolean          default(FALSE), not null
 #
 
 require 'rails_helper'
 
 RSpec.describe Goal, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a title, description, and user" do
+    expect(FactoryGirl.create(:goal)).to be_valid
+  end
 end

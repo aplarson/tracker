@@ -33,9 +33,20 @@ def sign_up_new_guy
   sign_up('new_guy')
 end
 
-def sign_in_new_guy
+def sign_in(username)
   visit '/session/new'
-  fill_in "Username", with: 'new_guy'
+  fill_in "Username", with: username
   fill_in "Password", with: 'password'
   click_button "Sign In"
+end
+
+def sign_in_new_guy
+  sign_in('new_guy')
+end
+
+def set_goal(user)
+  visit new_user_goal_url(user)
+  fill_in 'Goal', with: "Difficult Goal"
+  fill_in 'Description', with: 'A difficult goal'
+  click_button 'Set Goal!'
 end

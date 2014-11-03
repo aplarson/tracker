@@ -1,1 +1,11 @@
+<% if @goal.user_id != current_user.id && @goal.privacy %>
+
+<p>This goal is private</p>
+
+<% else %>
+
 <h1><%= @goal.title %></h1>
+
+<p><%= @goal.description %></p>
+
+<% end %>
