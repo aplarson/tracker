@@ -9,11 +9,12 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  privacy     :boolean          default(FALSE), not null
+#  completion  :boolean          default(FALSE), not null
 #
 
 class Goal < ActiveRecord::Base
   validates :title, :description, :user, presence: true
-  validates :privacy, inclusion: { in: [true, false, nil] }
+  validates :privacy, :completion, inclusion: { in: [true, false, nil] }
   
   belongs_to(
     :user,

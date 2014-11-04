@@ -1,5 +1,6 @@
 class GoalsController < ApplicationController
   before_action :require_sign_in
+  before_action :require_user_to_own_goal, only: [:edit, :update, :destroy]
   
   def new
     @user = User.find(params[:user_id])
@@ -31,7 +32,21 @@ class GoalsController < ApplicationController
     redirect_to user_goals_url(current_user)
   end
   
+  def edit
+    @goal = Goal.find(params[:id])
+  end
+  
+  def update
+    @goal = Goal.find(params[:id])
+    if @goal.update(goal_params)
+      redirect_to goal_url(@goal)
+    else
+      flash.now[:errors] = @goal.errors.full_messages
+      render :edit
+    end
+  end
+  
   def goal_params
-    params.require(:goal).permit(:title, :description)
+    params.require(:goal).permit(:title, :description, :completion)
   end
 end

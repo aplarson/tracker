@@ -1,0 +1,40 @@
+ <% if @goal.persisted? %>
+   <% action = goal_url(@goal) %>
+   <% button_text = "Update Goal" %>
+   <% method = "PATCH" %>
+ <% else %>
+   <% action = goals_url %>
+   <% button_text = "Set Goal!" %>
+   <% method = "POST" %>
+ <% end %>
+
+<form action="<%= action %>" method="POST">
+  <%= auth_token %>
+   <input type="hidden" name="_method" value="<%= method %>">
+  <label>Goal
+    <input type="text" 
+           name="goal[title]" 
+           value="<%= @goal.title %>">
+  </label>
+  
+  <label>Description
+    <textarea name="goal[description]"><%= @goal.description %></textarea>
+  </label>
+  
+   <% if @goal.persisted? %>
+     <label>Goal Complete!
+       <input type="radio" 
+              name="goal[completion]" 
+              value="true"
+              <%= "checked" if @goal.completion %>>
+     </label>
+     <label>Goal in Progress!
+       <input type="radio" 
+              name="goal[completion]" 
+              value="false"
+              <%= "checked" if !@goal.completion %>>
+     </label>
+   <% end %>
+  
+  <input type="submit" value="<%= button_text %>">
+</form>

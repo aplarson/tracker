@@ -8,8 +8,15 @@
 
 <p><%= @goal.description %></p>
 
+  <% if @goal.completion %>
+    <%= "Goal Completed!" %>
+  <% else %>
+    <%= "Goal in Progress!" %>
+  <% end %>
+  
 <% end %>
 
 <% if current_user.id == @goal.id %>
+  <%= link_to "Update Goal", edit_goal_url(@goal) %>
   <%= button_to "Remove Goal", goal_url(@goal), method: :delete %>
 <% end %>

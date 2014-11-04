@@ -25,4 +25,10 @@ class ApplicationController < ActionController::Base
   def require_sign_in
     redirect_to new_session_url unless logged_in?
   end
+  
+  def require_user_to_own_goal
+    unless Goal.find(params[:id]).user_id == current_user.id
+      redirect_to user_goals_url(current_user) 
+    end
+  end
 end

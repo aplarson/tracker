@@ -9,6 +9,7 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  privacy     :boolean          default(FALSE), not null
+#  completion  :boolean          default(FALSE), not null
 #
 
 require 'rails_helper'

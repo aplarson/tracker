@@ -160,4 +160,79 @@ feature "goals" do
     end
   end
   
+  feature "updating goals" do
+    given!(:user) { FactoryGirl.create(:user)}
+    given!(:goal) do
+        Goal.create(
+          title: 'Public Goal',
+          description: 'A goal',
+          user: user,
+          privacy: false
+        )
+    end
+    
+    it "allows a user to update their goals" do
+      sign_in('new_guy')
+      visit goal_url(goal)
+      click_link "Update Goal"
+      
+      expect(page).to have_content "Edit Goal"
+    end
+    
+    it "does not allow another user to update the user's goals" do
+      other_user = FactoryGirl.create(:another_user)
+      sign_in('newer_guy')
+      
+      expect(page).not_to have_content "Update Goal"
+    end
+    
+    it "updates the goal on clicking the link" do
+      sign_in('new_guy')
+      visit edit_goal_url(goal)
+      
+      fill_in "Goal", with: "Updated Title"
+      fill_in "Description", with: "Updated description"
+      click_button "Update Goal"
+      
+      expect(page).to have_content "Updated Title"
+      expect(page).to have_content "Updated description"
+    end
+  end
+  
+  feature "completing goals" do
+    given!(:user) { FactoryGirl.create(:user)}
+    given!(:goal) do
+        Goal.create(
+          title: 'Public Goal',
+          description: 'A goal',
+          user: user,
+          privacy: false
+        )
+    end
+    
+    it "shows goals as incomplete on creation" do
+      sign_in('new_guy')
+      visit goal_url(goal)
+      
+      expect(page).to have_content "Goal in Progress!"
+    end
+    
+    it "allows a user to record the completion of their goal" do
+      sign_in('new_guy')
+      visit edit_goal_url(goal)
+      choose "Goal Complete!"
+      click_button "Update Goal"
+      
+      expect(page).to have_content "Goal Completed!"
+    end
+    
+    it "does not allow another user to complete the user's goal" do
+      other_user = FactoryGirl.create(:another_user)
+      sign_in('newer_guy')
+      visit edit_goal_url(goal)
+      
+      expect(page).not_to have_content "Edit Goal"
+    end
+  end
+  
 end
