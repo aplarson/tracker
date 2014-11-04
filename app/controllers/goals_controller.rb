@@ -21,6 +21,16 @@ class GoalsController < ApplicationController
     @goal = Goal.find(params[:id])
   end
   
+  def index
+    @goals = Goal.where('user_id = ?', params[:user_id])
+  end
+  
+  def destroy
+    @goal = Goal.find(params[:id])
+    @goal.destroy
+    redirect_to user_goals_url(current_user)
+  end
+  
   def goal_params
     params.require(:goal).permit(:title, :description)
   end

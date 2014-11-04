@@ -9,3 +9,7 @@
 <p><%= @goal.description %></p>
 
 <% end %>
+
+<% if current_user.id == @goal.id %>
+  <%= button_to "Remove Goal", goal_url(@goal), method: :delete %>
+<% end %>

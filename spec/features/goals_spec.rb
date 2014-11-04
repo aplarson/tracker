@@ -33,6 +33,10 @@ feature "goals" do
       expect(page).to have_content "Description can't be blank"
     end
     
+    it "makes a goal public by default"
+    
+    it "makes a goal private if the option is checked"
+    
     it "redirects to the goal page when correctly filled out" do
       set_goal(user)
       
@@ -84,6 +88,76 @@ feature "goals" do
     end
     
     
+  end
+  
+  feature 'goals index' do
+    given!(:user) { FactoryGirl.create(:user)}
+    given!(:goal) do
+        Goal.create(
+          title: 'Public Goal',
+          description: 'A goal',
+          user: user,
+          privacy: false
+        )
+    end
+    given!(:private_goal) do
+        Goal.create(
+          title: 'Private Goal',
+          description: 'A very private goal',
+          user: user,
+          privacy: true
+        )
+    end
+    
+    it "shows a user's public goals" do
+      sign_in('new_guy')
+      visit user_goals_url(user)
+
+      expect(page).to have_content 'Public Goal'
+    end
+
+    it "shows the user their own private goals" do
+      sign_in('new_guy')
+      visit user_goals_url(user)
+
+      expect(page).to have_content 'Private Goal'
+    end
+    
+    it "does not show other users a user's private goals" do
+      other_user = FactoryGirl.create(:another_user)
+      sign_in('newer_guy')
+      visit user_goals_url(user)
+
+      expect(page).to have_content 'Public Goal'
+      expect(page).not_to have_content 'Private Goal'
+    end
+  end
+  
+  feature 'removing goals' do
+    given!(:user) { FactoryGirl.create(:user)}
+    given!(:goal) do
+        Goal.create(
+          title: 'Public Goal',
+          description: 'A goal',
+          user: user,
+          privacy: false
+        )
+    end
+    
+    it "allows a user to remove their goals" do
+      sign_in('new_guy')
+      visit goal_url(goal)
+      click_button "Remove Goal"
+      
+      expect(page).not_to have_content 'Public Goal'
+    end
+    
+    it "does not allow a user to remove other users' goals" do
+      other_user = FactoryGirl.create(:another_user)
+      sign_in('newer_guy')
+      
+      expect(page).not_to have_content "Remove Goal"
+    end
   end
   
 end

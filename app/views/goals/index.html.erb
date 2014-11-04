@@ -1,0 +1,5 @@
+<% @goals.each do |goal| %>
+  <% if goal.user_id == current_user.id || goal.privacy == false %>
+    <%= link_to goal.title, goal_url(goal) %>
+  <% end %>
+<% end %>

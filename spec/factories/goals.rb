@@ -18,5 +18,12 @@ FactoryGirl.define do
     user
   end
   
+  factory :private_goal do
+    title 'Difficult Goal'
+    description 'A difficult goal'
+    user
+    privacy true
+  end
+  
 
 end
