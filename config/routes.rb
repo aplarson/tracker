@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   end
   resource :session, only: [:new, :create, :destroy]
   resources :goals, except: [:new, :index]
-  
+  resources :goal_comments, only: [:create, :destroy]
 end

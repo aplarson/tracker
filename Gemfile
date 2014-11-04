@@ -32,6 +32,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'launchy'
 end
 
 group :test do

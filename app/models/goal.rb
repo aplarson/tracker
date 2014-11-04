@@ -22,4 +22,11 @@ class Goal < ActiveRecord::Base
     foreign_key: :user_id,
     primary_key: :id
   )
+  
+  has_many(
+    :comments,
+    class_name: "GoalComment",
+    foreign_key: :goal_id,
+    primary_key: :id
+  )
 end

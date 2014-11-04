@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
   
   has_many :goals
+  has_many(
+    :goal_comments,
+    class_name: "GoalComment",
+    foreign_key: :author_id,
+    primary_key: :id
+  )
   
   def password=(password)
     @password = password
